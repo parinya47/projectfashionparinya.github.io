@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FASHIONISTA | ร้านเสื้อผ้าแฟชั่นออนไลน์</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #111111;
+            --accent-color: #b8926a;
+            --text-color: #333333;
+            --bg-light: #f9f9f9;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            color: var(--text-color);
+            background-color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-menu li a {
+            text-decoration: none;
+            color: var(--text-color);
+            padding: 10px 15px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-menu li a:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-icons a {
+            color: var(--primary-color);
+            font-size: 20px;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: var(--accent-color);
+            color: var(--white);
+            font-size: 11px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Hero Video Section */
+        .hero {
+            position: relative;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 0;
+        }
+
+        .hero-content {
+            z-index: 1;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 12px 35px;
+            background: var(--white);
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        .hero-btn:hover {
+            background: var(--accent-color);
+            color: var(--white);
+        }
+
+        /* Main Layout Container */
+        .container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Filter System */
+        .filter-system {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding: 10px 15px;
+            padding-right: 40px;
+            border: 1px solid #ddd;
+            width: 250px;
+            outline: none;
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 13px;
+            color: #aaa;
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border: 1px solid #ddd;
+            background: var(--white);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border: 1px solid #eee;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 10px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .add-to-cart-btn:hover {
+            background: var(--accent-color);
+        }
+
+        /* Size Chart Section */
+        .size-chart-section {
+            background: var(--bg-light);
+            padding: 60px 20px;
+            margin: 60px 0;
+            border-radius: 4px;
+        }
+
+        .size-table-container {
+            overflow-x: auto;
+        }
+
+        .size-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .size-table th, .size-table td {
+            padding: 15px;
+            border: 1px solid #eee;
+        }
+
+        .size-table th {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* Reviews Section */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .review-card {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 4px;
+        }
+
+        .stars {
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+
+        .review-user {
+            font-weight: 600;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        /* FAQ & Contact Section */
+        .contact-faq-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            margin-top: 10px;
+            color: #666;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            outline: none;
+        }
+
+        .contact-form button {
+            padding: 12px 30px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: #aaa;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+            font-size: 14px;
+        }
+
+        /* Shopping Cart Sidebar (Popup) */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background: var(--white);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            z-index: 2000;
+            transition: 0.3s;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .close-cart {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+            border-bottom: 1px solid #f5f5f5;
+            padding-bottom: 15px;
+        }
+
+        .cart-item img {
+            width: 70px;
+            height: 90px;
+            object-fit: cover;
+        }
+
+        .cart-item-details h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-remove {
+            color: red;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .cart-total {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-color);
+            color: var(--white);
+            border: none;
+            margin-top: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .contact-faq-container { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 32px; }
+            .cart-sidebar { width: 100%; right: -100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">FASHIONISTA</a>
+            <ul class="nav-menu">
+                <li><a href="#">หน้าแรก</a></li>
+                <li><a href="#shop">สินค้าทั้งหมด</a></li>
+                <li><a href="#size-chart">ตารางไซส์</a></li>
+                <li><a href="#faq">คำถามที่พบบ่อย</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="#" id="cart-icon"><i class="fa-solid fa-bag-shopping"></i><span class="cart-count" id="cart-count">0</span></a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <video class="hero-video" autoplay loop muted playsinline>
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-girl-in-neon-light-futuristic-fashion-41804-large.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>New Summer Collection 2026</h1>
+            <p>ค้นพบสไตล์ที่เป็นคุณ กับเสื้อผ้าแฟชั่นระดับพรีเมียมที่ออกแบบมาเพื่อไลฟ์สไตล์ยุคใหม่</p>
+            <a href="#shop" class="hero-btn">ช้อปเลย</a>
+        </div>
+    </section>
+
+    <div class="container">
+        
+        <section id="shop">
+            <h2 class="section-title">คอลเลกชันของเรา</h2>
+            
+            <div class="filter-system">
+                <div class="filter-tags">
+                    <button class="filter-btn active" onclick="filterCategory('all')">ทั้งหมด</button>
+                    <button class="filter-btn" onclick="filterCategory('dress')">ชุดเดรส</button>
+                    <button class="filter-btn" onclick="filterCategory('shirt')">เสื้อเชิ้ต / เสื้อยืด</button>
+                    <button class="filter-btn" onclick="filterCategory('jacket')">แจ็คเก็ต</button>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="ค้นหาสินค้า..." onkeyup="searchProduct()">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+            </div>
+
+            <div class="product-grid" id="product-grid">
+                <div class="product-card" data-category="dress" data-name="เดรสยาวซัมเมอร์ลายดอก">
+                    <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500" alt="Dress" class="product-img">
+                    <div class="product-info">
+                        <div class="product-category">ชุดเดรส</div>
+                        <h3 class="product-title">เดรสยาวซัมเมอร์ลายดอก</h3>
+                        <div class="product-price">฿890</div>
+                        <button class="add-to-cart-btn" onclick="addToCart('เดรสยาวซัมเมอร์ลายดอก', 890, 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500')">เพิ่มลงตะกร้า</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="shirt" data-name="เสื้อเชิ้ตมินิมอลผ้าลินิน">
+                    <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500" alt="Shirt" class="product-img">
+                    <div class="product-info">
+                        <div class="product-category">เสื้อเชิ้ต / เสื้อยืด</div>
+                        <h3 class="product-title">เสื้อเชิ้ตมินิมอลผ้าลินิน</h3>
+                        <div class="product-price">฿450</div>
+                        <button class="add-to-cart-btn" onclick="addToCart('เสื้อเชิ้ตมินิมอลผ้าลินิน', 450, 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500')">เพิ่มลงตะกร้า</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="jacket" data-name="แจ็คเก็ตยีนส์โอเวอร์ไซส์">
+                    <img src="https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=500" alt="Jacket" class="product-img">
+                    <div class="product-info">
+                        <div class="product-category">แจ็คเก็ต</div>
+                        <h3 class="product-title">แจ็คเก็ตยีนส์โอเวอร์ไซส์</h3>
+                        <div class="product-price">฿1,290</div>
+                        <button class="add-to-cart-btn" onclick="addToCart('แจ็คเก็ตยีนส์โอเวอร์ไซส์', 1290, 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=500')">เพิ่มลงตะกร้า</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="dress" data-name="เดรสสั้นผ้าไหมซาติน">
+                    <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=500" alt="Dress" class="product-img">
+                    <div class="product-info">
+                        <div class="product-category">ชุดเดรส</div>
+                        <h3 class="product-title">เดรสสั้นผ้าไหมซาติน</h3>
+                        <div class="product-price">฿950</div>
+                        <button class="add-to-cart-btn" onclick="addToCart('เดรสสั้นผ้าไหมซาติน', 950, 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=500')">เพิ่มลงตะกร้า</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="size-chart" class="size-chart-section">
+            <h2 class="section-title">ตารางเทียบไซส์ (Size Chart)</h2>
+            <div class="size-table-container">
+                <table class="size-table">
+                    <thead>
+                        <tr>
+                            <th>ไซส์ (Size)</th>
+                            <th>รอบอก (นิ้ว)</th>
+                            <th>รอบเอว (นิ้ว)</th>
+                            <th>สะโพก (นิ้ว)</th>
+                            <th>ความยาว (นิ้ว)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>S</td>
+                            <td>32 - 34</td>
+                            <td>25 - 27</td>
+                            <td>34 - 36</td>
+                            <td>35</td>
+                        </tr>
+                        <tr>
+                            <td>M</td>
+                            <td>34 - 36</td>
+                            <td>27 - 29</td>
+                            <td>36 - 38</td>
+                            <td>36</td>
+                        </tr>
+                        <tr>
+                            <td>L</td>
+                            <td>36 - 38</td>
+                            <td>29 - 31</td>
+                            <td>38 - 40</td>
+                            <td>37</td>
+                        </tr>
+                        <tr>
+                            <td>XL</td>
+                            <td>38 - 40</td>
+                            <td>31 - 33</td>
+                            <td>40 - 42</td>
+                            <td>38</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="reviews">
+            <h2 class="section-title">รีวิวจากลูกค้า</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p>"ผ้าดีมากค่ะ ทรงสวยตรงปกเหมือนในแบบเลย ส่งไวมาก สั่งเดรสยาวมาใส่พอดีเลยค่ะ ประทับใจมาก"</p>
+                    <div class="review-user">- คุณ มินตรา ก.</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <p>"แจ็คเก็ตยีนส์หนากำลังดี คัตติ้งเนี้ยบ เทียบตารางไซส์แล้วเลือกพอดีตัวเลยครับ แนะนำร้านนี้เลย"</p>
+                    <div class="review-user">- คุณ ณัฐพล ท.</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p>"เสื้อเชิ้ตใส่สบายมาก ผ้าลินินไม่ร้อน เหมาะกับอากาศเมืองไทยมาก ซื้อซ้ำตัวที่สองแล้วค่ะ"</p>
+                    <div class="review-user">- คุณ รินรดา พ.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq">
+            <div class="contact-faq-container">
+                <div>
+                    <h2 class="section-title" style="text-align: left; font-size: 24px;">คำถามที่พบบ่อย (FAQ)</h2>
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-question">จัดส่งสินค้าใช้เวลากี่วัน? <i class="fa-solid fa-plus"></i></div>
+                        <div class="faq-answer">กรุงเทพฯ และปริมณฑล ใช้เวลา 1-2 วันทำการ สำหรับต่างจังหวัดใช้เวลา 2-3 วันทำการค่ะ</div>
+                    </div>
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-question">สามารถเปลี่ยนไซส์สินค้าได้ไหม? <i class="fa-solid fa-plus"></i></div>
+                        <div class="faq-answer">สามารถเปลี่ยนไซส์ได้ภายใน 7 วันหลังจากได้รับสินค้า โดยสินค้าต้องอยู่ในสภาพเดิมและยังไม่แกะป้ายสินค้าออกค่ะ</div>
+                    </div>
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-question">มีบริการเก็บเงินปลายทางไหม? <i class="fa-solid fa-plus"></i></div>
+                        <div class="faq-answer">มีบริการเก็บเงินปลายทาง (COD) โดยไม่มีค่าบริการเพิ่มเติมค่ะ</div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="section-title" style="text-align: left; font-size: 24px;">ติดต่อเรา / ช่วยเหลือ</h2>
+                    <form class="contact-form" onsubmit="alert('ข้อความของท่านถูกส่งเรียบร้อยแล้ว จะมีเจ้าหน้าที่ติดต่อกลับโดยเร็วที่สุด'); return false;">
+                        <input type="text" placeholder="ชื่อ-นามสกุล" required>
+                        <input type="email" placeholder="อีเมลของคุณ" required>
+                        <textarea rows="4" placeholder="ข้อความหรือคำถามที่ต้องการติดต่อ..." required></textarea>
+                        <button type="submit">ส่งข้อความ</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>ตะกร้าสินค้าของคุณ</h3>
+            <span class="close-cart" id="close-cart">&times;</span>
+        </div>
+        <div class="cart-items" id="cart-items-container">
+            </div>
+        <div class="cart-total">
+            <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 15px;">
+                <span>ยอดรวมทั้งหมด:</span>
+                <span id="cart-total-price">฿0</span>
+            </div>
+            <button class="checkout-btn" onclick="alert('กำลังนำท่านเข้าสู่ขั้นตอนชำระเงิน...')">สั่งซื้อสินค้า</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 FASHIONISTA Brand. All Rights Reserved. ออกแบบเพื่อธุรกิจแฟชั่นมืออาชีพ</p>
+    </footer>
+
+    <script>
+        // --- ระบบตะกร้าสินค้า (Add to Cart) ---
+        let cart = [];
+        const cartIcon = document.getElementById('cart-icon');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const closeCart = document.getElementById('close-cart');
+        const cartItemsContainer = document.getElementById('cart-items-container');
+        const cartCount = document.getElementById('cart-count');
+        const cartTotalPrice = document.getElementById('cart-total-price');
+
+        cartIcon.addEventListener('click', (e) => { e.preventDefault(); cartSidebar.classList.add('open'); });
+        closeCart.addEventListener('click', () => cartSidebar.classList.remove('open'));
+
+        function addToCart(name, price, img) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price, img, quantity: 1 });
+            }
+            updateCartUI();
+            cartSidebar.classList.add('open'); // เปิดตะกร้าทันทีเมื่อกดซื้อ
+        }
+
+        function removeCartItem(name) {
+            cart = cart.filter(item => item.name !== name);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+            let totalCount = 0;
+
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                totalCount += item.quantity;
+
+                cartItemsContainer.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.img}" alt="${item.name}">
+                        <div class="cart-item-details">
+                            <h4>${item.name}</h4>
+                            <p>฿${item.price} x ${item.quantity}</p>
+                            <span class="cart-item-remove" onclick="removeCartItem('${item.name}')"><i class="fa-solid fa-trash"></i> ลบ</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            cartCount.innerText = totalCount;
+            cartTotalPrice.innerText = '฿' + total.toLocaleString();
+        }
+
+        // --- ระบบค้นหาและตัวกรองหมวดหมู่ (Filter & Search) ---
+        function filterCategory(category) {
+            // สลับสถานะปุ่ม Active
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function searchProduct() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const cards = document.querySelectorAll('.product-card');
+            
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name').toLowerCase();
+                if (name.includes(query)) {
+                    card.style.style.display = 'block'; // แก้ไขบั๊กการแสดงผลชั่วคราว
+                    card.setAttribute('style', 'display: block !important');
+                } else {
+                    card.setAttribute('style', 'display: none !important');
+                }
+            });
+        }
+
+        // --- ระบบสลับเปิด/ปิดคำถาม FAQ (Accordion) ---
+        function toggleFaq(element) {
+            element.classList.toggle('active');
+            const icon = element.querySelector('.faq-question i');
+            if (element.classList.contains('active')) {
+                icon.classList.replace('fa-plus', 'fa-minus');
+            } else {
+                icon.classList.replace('fa-minus', 'fa-plus');
+            }
+        }
+    </script>
+</body>
+</html>
